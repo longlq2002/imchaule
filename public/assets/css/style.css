@@ -518,9 +518,6 @@ body {
 .skill-inner-con {
   z-index: 1;
 }
-.skill-right-con {
-  padding-left: 40px;
-}
 .skill-right-con h6 {
   font-weight: 600;
   margin-bottom: 15px;
