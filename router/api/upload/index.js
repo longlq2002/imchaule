@@ -1,6 +1,6 @@
 const uploadRouter = require("express").Router();
 
-uploadRouter.get("/", (req, res) => {
+uploadRouter.post("/", (req, res) => {
     const file = req.files.image;
     const date = new Date();
 

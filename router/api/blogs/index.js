@@ -29,6 +29,7 @@ blogsRouter.get("/:slug", (req, res) => {
 blogsRouter.post("/", (req, res) => {
     try {
         const blog = {
+            id: Date.now(),
             title: req.body.title,
             slug: slugify(req.body.title, { lower: true }),
             article: req.body.article,

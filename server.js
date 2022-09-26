@@ -15,7 +15,7 @@ app.use(fileUpload());
 app.use("/", appRouter);
 
 app.use((req, res) => {
-    res.json("404");
+    res.status(404).json("404");
 });
 
 app.listen(port, () => {

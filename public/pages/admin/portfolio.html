@@ -11,11 +11,11 @@
 <a class="btn" href="/admin">Back</a>
 <hr>
 <br/>
-<div class="employees-table">
+<div class="portfolio-table">
     <div style="margin-bottom: 1rem">
         <a href="/admin/portfolio/editor">New work</a>
     </div>
-    <table class="list" id="employeeList">
+    <table class="list" id="portfolioList">
         <thead>
         <tr>
             <th>Title</th>
@@ -34,5 +34,30 @@
     <span class="dot" onclick="currentSlide(2)"></span>
     <span class="dot" onclick="currentSlide(3)"></span>
 </div>
+<script>
+    fetch("/api/portfolio", {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+    }).then(res => res.json()).then(data => {
+        const table = document.getElementById("portfolioList").getElementsByTagName("tbody")[0];
+
+        data.portfolio.map((blog) => {
+            const newRow = table.insertRow(table.length);
+            cell1 = newRow.insertCell(0);
+            cell1.innerHTML = blog.title;
+            cell2 = newRow.insertCell(1);
+            cell2.innerHTML = `
+                <div style="height: 10rem">
+                    <img src="${blog.image}" alt="${blog.image}" style="max-height: 8rem"/>
+                </div>
+               `;
+            cell3 = newRow.insertCell(2);
+            cell3.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+                       <a onClick="onDelete(this)">Delete</a>`;
+        });
+    });
+</script>
 </body>
 </html>
