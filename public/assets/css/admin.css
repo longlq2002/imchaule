@@ -1,0 +1,189 @@
+.employee-form {
+  border-style: solid;
+  /* margin-bottom: 10px; */
+  /* margin-left: 10px; */
+  padding: 10px;
+  /* width: 50%; */
+  margin: auto;
+  width: 50%;
+  /* border: 3px solid green; */
+  /* padding: 10px; */
+}
+
+.employees-table {
+  border-style: solid;
+  /* margin-bottom: 10px; */
+  /* margin-left: 10px; */
+  padding: 20px;
+  /* width: 50%; */
+  margin: auto;
+  width: 70%;
+  /* border: 3px solid green; */
+  /* padding: 10px; */
+}
+
+body > table{
+  width: 80%;
+}
+
+table{
+  border-collapse: collapse;
+}
+table.list{
+  width:100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even),table.list thead>tr {
+  background-color: #dddddd;
+}
+
+input[type=text], input[type=number] {
+  width: 100%;
+  padding: 8px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 30%;
+  background-color: black;
+  color: white;
+  padding: 10px 18px;
+  /* margin: 0px 0; */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form div.form-action-buttons{
+  text-align: right;
+}
+
+a{
+  cursor: pointer;
+  text-decoration: underline;
+  color: #0000ee;
+  margin-right: 4px;
+}
+
+label.validation-error{
+  color:   red;
+  margin-left: 5px;
+}
+
+.hide{
+  display:none;
+}
+
+.btn {
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 35px;
+  color: #ffffff !important;
+  border-radius: 5px;
+  background: #9e7025;
+  transition: 0.4s;
+}
+
+.btn:hover {
+  background: #292929;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+* {box-sizing:border-box}
+/* slideshow container style */
+ .slideshow-container {
+   max-width: 1000px;
+   position: relative;
+   margin: auto;
+ }
+ .mySlides {
+   display: none;
+ }
+/* arow*/
+ .prev, .next {
+   cursor: pointer;
+   position: absolute;
+   top: 50%;
+   width: auto;
+   margin-top: -22px;
+   padding: 16px;
+   color: white;
+   font-weight: bold;
+   font-size: 18px;
+   transition: 0.6s ease;
+   border-radius: 0 3px 3px 0;
+   user-select: none;
+ }
+ .next {
+   right: 0;
+   border-radius: 3px 0 0 3px;
+ }
+ .prev:hover, .next:hover {
+   background-color: rgba(0,0,0,0.8);
+ }
+/* Thiết lập style cho nội dung của mỗi phần tử slideshow */
+ .text {
+   color: #f2f2f2;
+   font-size: 15px;
+   padding: 8px 12px;
+   position: absolute;
+   bottom: 8px;
+   width: 100%;
+   text-align: center;
+ }
+/* Thiết lập style cho số hiển thị của phần tử */
+ .numbertext {
+   color: #f2f2f2;
+   font-size: 12px;
+   padding: 8px 12px;
+   position: absolute;
+   top: 0;
+ }
+/* thiết lập style  nút tròn điều khiển*/
+ .dot {
+   cursor: pointer;
+   height: 15px;
+   width: 15px;
+   margin: 0 2px;
+   background-color: #bbb;
+   border-radius: 50%;
+   display: inline-block;
+   transition: background-color 0.6s ease;
+ }
+.active, .dot:hover {
+   background-color: #717171;
+ }
+/* tạo hiệu ứng chuyển động fade */
+ .fade {
+   -webkit-animation-name: fade;
+   -webkit-animation-duration: 1.5s;
+   animation-name: fade;
+   animation-duration: 1.5s;
+ }
+@-webkit-keyframes fade {
+   from {opacity: .4}
+   to {opacity: 1}
+ }
+@keyframes fade {
+   from {opacity: .4}
+   to {opacity: 1}
+ }

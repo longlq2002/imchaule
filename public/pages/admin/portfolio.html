@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>
+        Admin
+    </title>
+    <link href="/assets/css/admin.css" rel="stylesheet">
+</head>
+<body>
+<h1>Admin</h1>
+<a class="btn" href="/admin">Back</a>
+<hr>
+<br/>
+<div class="employees-table">
+    <div style="margin-bottom: 1rem">
+        <a href="/admin/portfolio/editor">New work</a>
+    </div>
+    <table class="list" id="employeeList">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<br/>
+<!-- Dot (Slideshow)-->
+<div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+</body>
+</html>
