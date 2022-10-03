@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog : </title>
-
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/editor.css">
-    <link rel="stylesheet" href="/assets/css/blog.css">
+    <title>Blog : Editor</title>
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -18,7 +14,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -26,19 +22,42 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/assets/css/editor.css">
+
 </head>
 <body>
 
-<div class="banner"></div>
-
-<div class="blog">
-    <h1 class="title"></h1>
-    <p class="published"><span>published at - </span></p>
-    <div class="article">
-    </div>
+<div class="banner">
+    <input type="file" accept="image/*" id="banner-upload" hidden>
+    <label for="banner-upload"
+           class="banner-upload-btn"><img src="/assets/images/upload.png" alt="upload banner"></label>
 </div>
 
-<script src="/assets/js/blog.js"></script>
+<div class="blog">
+    <textarea type="text" class="title" placeholder="Work title..."></textarea>
+</div>
+
+<div class="blog-options">
+    <button class="btn dark publish-btn">publish</button>
+</div>
+
+<script src="/assets/js/portfolio-editor-work.js"></script>
+
+<script>
+    const workId = window.location.pathname.split("/").pop();
+    fetch("/api/portfolio/" + workId)
+        .then(res => res.json())
+        .then(data => {
+            const { work } = data;
+
+            workTitleField.innerHTML = work.title;
+            banner.style.backgroundImage = `url("${work.image}")`;
+            bannerPath = work.image
+        }).catch(error => console.error(error));
+
+</script>
+
 
 </body>
 </html>

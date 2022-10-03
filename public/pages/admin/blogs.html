@@ -30,17 +30,48 @@
 <br/>
 <!-- Dot (Slideshow)-->
 <div style="text-align:center">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
+    <button id="pagination-previous" onclick="changePage(pageNumber - 1)">
+        &larr;
+    </button>
+    <label>
+        <input id="pagination-page_number" style="display: inline; width: 2%; text-align: center;"/>
+    </label>
+    <button id="pagination-next" onclick="changePage(pageNumber + 1)">
+        &rarr;
+    </button>
 </div>
 <script>
-    fetch("/api/blogs", {
+    const query = new Proxy(new URLSearchParams(window.location.search), {
+        get: (queryParams, prop) => queryParams.get(prop),
+    });
+
+    const previousButton = document.querySelector("#pagination-previous");
+    const nextButton = document.querySelector("#pagination-next");
+    const pageInput = document.querySelector("#pagination-page_number");
+
+    let pageNumber = Number(query.page) || 1;
+    pageInput.value = pageNumber;
+
+    pageInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            if (isNaN(event.target.value)) {
+                changePage(1);
+                return;
+            }
+
+            changePage(Number(event.target.value));
+        }
+    })
+
+    fetch("/api/blogs" + "?page=" + (query.page || 1), {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
     }).then(res => res.json()).then(data => {
+        previousButton.disabled = !data.pagination.allowPrevious;
+        nextButton.disabled = !data.pagination.allowNext;
+
         const table = document.getElementById("blogsList").getElementsByTagName("tbody")[0];
 
         data.blogs.map((blog) => {
@@ -56,10 +87,32 @@
                 </div>
                `;
             cell4 = newRow.insertCell(3);
-            cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                       <a onClick="onDelete(this)">Delete</a>`;
+            cell4.innerHTML = `
+                <div>
+                    <a href=/admin/blogs/${blog.id}>Edit</a>
+                    <a onClick="onDelete(${blog.id})">Delete</a>
+                </div>
+            `;
         });
     });
+</script>
+<script>
+    function onDelete(workId) {
+        const text = "Are you sure want to delete this blog?";
+
+        if (confirm(text)) {
+            fetch("/api/blogs/" + workId, {
+                method: "DELETE"
+            }).then(res => res.json()).then(data => {
+                location.href = "/admin/blogs";
+            });
+        }
+    }
+</script>
+<script>
+    function changePage(page) {
+        location.href = "/admin/blogs" + "?page=" + page;
+    }
 </script>
 </body>
 </html>

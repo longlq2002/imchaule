@@ -353,11 +353,8 @@ body {
   float: left;
   width: 100px;
   text-align: center;
-  display: none;
 }
-.filterDiv.show {
-  display: block;
-}
+
 #myBtnContainer {
   margin-bottom: 45px;
 }
@@ -390,7 +387,7 @@ body {
 
 .portfolio-img-content {
   position: absolute;
-  bottom: 30px;
+  bottom: 320px;
   width: 100%;
   padding: 0 48px 0 20px;
 }

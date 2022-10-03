@@ -30,34 +30,87 @@
 <br/>
 <!-- Dot (Slideshow)-->
 <div style="text-align:center">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
+    <button id="pagination-previous" onclick="changePage(pageNumber - 1)">
+        &larr;
+    </button>
+    <label>
+        <input id="pagination-page_number" style="display: inline; width: 2%; text-align: center;"/>
+    </label>
+    <button id="pagination-next" onclick="changePage(pageNumber + 1)">
+        &rarr;
+    </button>
 </div>
 <script>
-    fetch("/api/portfolio", {
+    const query = new Proxy(new URLSearchParams(window.location.search), {
+        get: (queryParams, prop) => queryParams.get(prop),
+    });
+
+    const previousButton = document.querySelector("#pagination-previous");
+    const nextButton = document.querySelector("#pagination-next");
+    const pageInput = document.querySelector("#pagination-page_number");
+
+    let pageNumber = Number(query.page) || 1;
+    pageInput.value = pageNumber;
+
+    pageInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            if (isNaN(event.target.value)) {
+                changePage(1);
+                return;
+            }
+
+            changePage(Number(event.target.value));
+        }
+    });
+
+    fetch("/api/portfolio" + "?page=" + (query.page || 1), {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
     }).then(res => res.json()).then(data => {
+        previousButton.disabled = !data.pagination.allowPrevious;
+        nextButton.disabled = !data.pagination.allowNext;
+
         const table = document.getElementById("portfolioList").getElementsByTagName("tbody")[0];
 
-        data.portfolio.map((blog) => {
+        data.portfolio.map((work) => {
             const newRow = table.insertRow(table.length);
             cell1 = newRow.insertCell(0);
-            cell1.innerHTML = blog.title;
+            cell1.innerHTML = work.title;
             cell2 = newRow.insertCell(1);
             cell2.innerHTML = `
                 <div style="height: 10rem">
-                    <img src="${blog.image}" alt="${blog.image}" style="max-height: 8rem"/>
+                    <img src="${work.image}" alt="${work.image}" style="max-height: 8rem"/>
                 </div>
                `;
             cell3 = newRow.insertCell(2);
-            cell3.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                       <a onClick="onDelete(this)">Delete</a>`;
+            cell3.innerHTML = `
+                <div>
+                     <a href=/admin/portfolio/${work.id}>Edit</a>
+                    <a onClick="onDelete(${work.id})">Delete</a>
+                </div>
+               `;
         });
     });
+</script>
+<script>
+    function onDelete(workId) {
+        const text = "Are you sure want to delete this portfolio work?";
+
+        if (confirm(text)) {
+            fetch("/api/portfolio/" + workId, {
+                method: "DELETE"
+            }).then(res => res.json()).then(data => {
+                location.href = "/admin/portfolio";
+            });
+        }
+    }
+</script>
+<script>
+    function changePage(page) {
+        location.href = "/admin/portfolio" + "?page=" + page;
+    }
 </script>
 </body>
 </html>

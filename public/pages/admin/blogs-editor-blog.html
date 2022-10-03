@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog : </title>
-
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/editor.css">
-    <link rel="stylesheet" href="/assets/css/blog.css">
+    <title>Blog : Editor</title>
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -26,19 +22,44 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/assets/css/editor.css">
+
 </head>
 <body>
 
-<div class="banner"></div>
-
-<div class="blog">
-    <h1 class="title"></h1>
-    <p class="published"><span>published at - </span></p>
-    <div class="article">
-    </div>
+<div class="banner">
+    <input type="file" accept="image/*" id="banner-upload" hidden>
+    <label for="banner-upload"
+           class="banner-upload-btn"><img src="/assets/images/upload.png" alt="upload banner"></label>
 </div>
 
-<script src="/assets/js/blog.js"></script>
+<div class="blog">
+    <textarea type="text" class="title" placeholder="Blog title..."></textarea>
+    <textarea type="text" class="article" placeholder="Start writing here..."></textarea>
+</div>
 
+<div class="blog-options">
+    <button class="btn dark publish-btn">publish</button>
+    <input type="file" accept="image/*" id="image-upload" hidden>
+    <label for="image-upload" class="btn grey upload-btn">Upload Image</label>
+</div>
+
+<script src="/assets/js/blogs-editor-blog.js"></script>
+
+<script>
+    const blogId = window.location.pathname.split("/").pop();
+    fetch("/api/blogs/" + blogId)
+        .then(res => res.json())
+        .then(data => {
+            const { blog } = data;
+
+            blogTitleField.innerHTML = blog.title;
+            articleField.innerHTML = blog.article;
+            banner.style.backgroundImage = `url("${blog.bannerImage}")`;
+            bannerPath = blog.bannerImage
+        }).catch(error => console.error(error));
+
+</script>
 </body>
 </html>

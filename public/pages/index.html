@@ -502,110 +502,10 @@
 <!-- portfolio section -->
 <section class="w-100 float-left portfolio-body-con">
     <div class="container">
-        <div class="d-flex flex-wrap portfolio-img-con position-relative w-100 float-left wow fadeInUp"
-             style="overflow-x: hidden; overflow-y: scroll; height: 40rem">
-            <div class="filterDiv position-relative">
-                <a href="#" data-toggle="modal" data-target="#modalporfolio2">
-                    <div class="portfolio-img position-relative">
-                        <figure>
-                            <img src="/assets/images/portfolio-img2.png"
-                                 alt="portfolio-img1"
-                                 class="img-fluid"
-                            />
-                        </figure>
-                    </div>
-                </a>
-                <div class="portfolio-img-content text-left">
-                    <div class="portfolio-img-title d-inline-block">
-                        <h4>Lorem ipsum, dolor sit amet.</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="filterDiv position-relative">
-                <a href="#" data-toggle="modal" data-target="#modalporfolio2">
-                    <div class="portfolio-img position-relative">
-                        <figure>
-                            <img src="/assets/images/portfolio-img2.png"
-                                 alt="portfolio-img1"
-                                 class="img-fluid"
-                            />
-                        </figure>
-                    </div>
-                </a>
-                <div class="portfolio-img-content text-left">
-                    <div class="portfolio-img-title d-inline-block">
-                        <h4>Lorem ipsum, dolor sit amet.</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="filterDiv position-relative">
-                <a href="#" data-toggle="modal" data-target="#modalporfolio2">
-                    <div class="portfolio-img position-relative">
-                        <figure>
-                            <img src="/assets/images/portfolio-img2.png"
-                                 alt="portfolio-img1"
-                                 class="img-fluid"
-                            />
-                        </figure>
-                    </div>
-                </a>
-                <div class="portfolio-img-content text-left">
-                    <div class="portfolio-img-title d-inline-block">
-                        <h4>Lorem ipsum, dolor sit amet.</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="filterDiv position-relative">
-                <a href="#" data-toggle="modal" data-target="#modalporfolio2">
-                    <div class="portfolio-img position-relative">
-                        <figure>
-                            <img src="/assets/images/portfolio-img2.png"
-                                 alt="portfolio-img1"
-                                 class="img-fluid"
-                            />
-                        </figure>
-                    </div>
-                </a>
-                <div class="portfolio-img-content text-left">
-                    <div class="portfolio-img-title d-inline-block">
-                        <h4>Lorem ipsum, dolor sit amet.</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="filterDiv position-relative">
-                <a href="#" data-toggle="modal" data-target="#modalporfolio2">
-                    <div class="portfolio-img position-relative">
-                        <figure>
-                            <img src="/assets/images/portfolio-img2.png"
-                                 alt="portfolio-img1"
-                                 class="img-fluid"
-                            />
-                        </figure>
-                    </div>
-                </a>
-                <div class="portfolio-img-content text-left">
-                    <div class="portfolio-img-title d-inline-block">
-                        <h4>Lorem ipsum, dolor sit amet.</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="filterDiv position-relative">
-                <a href="#" data-toggle="modal" data-target="#modalporfolio2">
-                    <div class="portfolio-img position-relative">
-                        <figure>
-                            <img src="/assets/images/portfolio-img2.png"
-                                 alt="portfolio-img1"
-                                 class="img-fluid"
-                            />
-                        </figure>
-                    </div>
-                </a>
-                <div class="portfolio-img-content text-left">
-                    <div class="portfolio-img-title d-inline-block">
-                        <h4>Lorem ipsum, dolor sit amet.</h4>
-                    </div>
-                </div>
-            </div>
+        <div id="portfolio-works"
+             class="d-flex flex-wrap portfolio-img-con position-relative w-100 float-left wow fadeInUp"
+             style="overflow-x: hidden; overflow-y: scroll; height: 40rem"
+        >
         </div>
     </div>
 </section>
@@ -1017,8 +917,30 @@
         });
 </script>
 <script>
-    fetch("/portfolio").then(res => res.json()).then(data => {
-        const portfolioWorks = document;
+    fetch("/api/portfolio").then(res => res.json()).then(data => {
+        const portfolioDocument = document.querySelector("#portfolio-works");
+
+        data.portfolio.map((work) => {
+            portfolioDocument.innerHTML += `
+                <div class="filterDiv position-relative">
+                    <a href="#" data-toggle="modal" data-target="#modalporfolio2">
+                        <div class="portfolio-img position-relative">
+                            <figure>
+                                <img src=${work.image}
+                                 alt="portfolio-img1"
+                                 class="img-fluid"
+                                />
+                            </figure>
+                        </div>
+                    </a>
+                    <div class="portfolio-img-content text-left">
+                        <div class="portfolio-img-title d-inline-block">
+                            <h4>${work.title}</h4>
+                        </div>
+                    </div>
+                </div>
+                `;
+        });
     });
 </script>
 </body>
